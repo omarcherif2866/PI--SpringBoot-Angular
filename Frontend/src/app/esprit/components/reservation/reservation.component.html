@@ -1,0 +1,216 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2 ">
+                        <p-button label="Primary" label="Ajouter" icon="pi pi-plus"  [raised]="true" [text]="true" (click)="openNew()" severity="info" />
+                        <span class="mx-2"></span>
+                        <p-button label="Danger" label="Supprimer" icon="pi pi-trash"  [raised]="true" [text]="true" severity="danger"
+                            (click)="deleteSelectedReservations()"
+                            [disabled]="!selectedReservations || !selectedReservations.length" />
+
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <div class="my-2">
+                        <p-button label="Primary" label="Calendrier" icon="pi pi-calendar"  [raised]="true" [text]="true" (click)="calendrierReservation()" severity="info" />
+
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="reservations" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['lieu','dateDeb','dateFin','budget','activiteId','clubId','evenementId']"
+                [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedReservations" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Gérer les réservations</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
+                                class="w-full sm:w-auto" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th>Lieu </th>
+                        <th >Date début </th>
+                        <th >Date fin </th>
+                        <th >Budget</th>
+                        <th >Activité </th>
+                        <th >Club </th>
+                        <th >Événement</th>
+                        <th> Option</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-reservation>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="reservation"></p-tableCheckbox>
+                        </td>
+                        <td><span class="p-column-title">Lieu</span>{{reservation.lieu}}</td>
+                        <td><span class="p-column-title">Date début</span>{{reservation.dateDeb | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td><span class="p-column-title">Date fin</span>{{reservation.dateFin | date:'dd/MM/yyyy  HH:mm'}}</td>
+                        <td><span class="p-column-title">Budget</span>{{reservation.budget | currency}}</td>
+                        <td><span class="p-column-title">Activité</span>{{reservation.activiteId.nom}}</td>
+                        <td><span class="p-column-title">Club</span>{{reservation.clubId.nom}}</td>
+                        <td><span class="p-column-title">Événement</span>{{reservation.evenementId.nom}}</td>
+                        <td>
+                            <div class="flex">
+                                <p-button icon="pi pi-pencil" class="button-spacing" [rounded]="true" [text]="true" [raised]="true" (click)="editReservation(reservation)" severity="info" />
+                                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" (click)="deleteReservation(reservation)" severity="danger" />
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="AddReservationDialog" [style]="{width: '450px'}" header="Détails de la réservation"
+            [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="lieu">Lieu</label>
+                    <input type="text" pInputText id="lieu" [(ngModel)]="reservation.lieu" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !reservation.lieu}" />
+                    <small class="ng-dirty ng-invalid error-message" *ngIf="submitted && !reservation.lieu">Lieu est requis.</small>
+                </div>
+                <div class="field">
+                    <label for="dateDeb">Date début</label>
+                    <p-calendar appendTo="body" id="dateDeb" [(ngModel)]="reservation.dateDeb" [showTime]="true" [showButtonBar]="false"
+                        [hourFormat]="24" dateFormat="dd/mm/yy" required autofocus></p-calendar>
+                        <small class="ng-dirty ng-invalid error-message" *ngIf="submitted && !reservation.dateDeb">Date début est requis.</small>
+
+                </div>
+                <div class="field">
+                    <label for="dateFin">Date fin</label>
+                    <p-calendar appendTo="body" id="dateFin"  [disabled]=" !reservation.dateDeb" [(ngModel)]="reservation.dateFin" [showTime]="true"
+                        [hourFormat]="24" dateFormat="dd/mm/yy" required autofocus [minDate]="reservation.dateDeb"></p-calendar>
+                        <small class="ng-dirty ng-invalid error-message" *ngIf="submitted && !reservation.dateFin">Date fin est requis.</small>
+
+                </div>
+                <div class="field">
+                    <label for="budget">Budget</label>
+                    <p-inputNumber id="budget" [(ngModel)]="reservation.budget" mode="currency" currency="USD"
+                        locale="en-US" required autofocus></p-inputNumber>
+                        <small class="ng-dirty ng-invalid error-message" *ngIf="submitted && !reservation.budget">Budget est requis.</small>
+
+                </div>
+                <div class="field">
+                    <label for="activites">Activités</label>
+                    <p-dropdown  appendTo="body" id="activites" [options]="activites" [(ngModel)]="reservation.activiteId" optionLabel="nom" placeholder="Sélectionner des activités"></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="clubs">Clubs</label>
+                    <p-dropdown appendTo="body" id="clubs" [options]="clubs" [(ngModel)]="reservation.clubId" optionLabel="nom" placeholder="Sélectionner des clubs"></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="evenements">Événements</label>
+                    <p-dropdown appendTo="body" id="evenements" [options]="evenements" [(ngModel)]="reservation.evenementId" optionLabel="nom" placeholder="Sélectionner des événements"></p-dropdown>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text"
+                    (click)="saveReservation()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="UpdateReservationDialog" [style]="{width: '450px'}" header="Détails de la réservation"
+            [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="lieu">Lieu</label>
+                    <input type="text" pInputText id="lieu" [(ngModel)]="reservation.lieu" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !reservation.lieu}" />
+                    <small class="ng-dirty ng-invalid error-message" *ngIf="submitted && !reservation.lieu">Lieu est requis.</small>
+                </div>
+                <div class="field">
+                    <label for="dateDeb">Date début</label>
+                    <p-calendar appendTo="body" id="dateDeb" inputId="calendar-24h" [(ngModel)]="reservation.dateDeb"[readonlyInput]="true" [showButtonBar]="false"
+                        [showTime]="true" [hourFormat]="24" dateFormat="dd/mm/yy" />
+                </div>
+                <div class="field">
+                    <label for="dateFin">Date fin</label>
+                    <p-calendar appendTo="body" id="dateFin" inputId="calendar-24h" [(ngModel)]="reservation.dateFin" [disabled]=" !reservation.dateDeb"[readonlyInput]="true"
+                        [showTime]="true" [hourFormat]="24" dateFormat="dd/mm/yy" [minDate]="reservation.dateDeb" />
+
+                </div>
+                <div class="field">
+                    <label for="budget">Budget</label>
+                    <p-inputNumber id="budget" [(ngModel)]="reservation.budget" mode="currency" currency="USD"
+                        locale="en-US"></p-inputNumber>
+                </div>
+                <div class="field">
+                    <label for="activites">Activités</label>
+                    <p-dropdown  appendTo="body" id="activites" [options]="activites" optionLabel="nom" [(ngModel)]="reservation.activiteId"  placeholder="Sélectionner des activités"></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="clubs">Clubs</label>
+                    <p-dropdown appendTo="body" id="clubs" [options]="clubs" optionLabel="nom"  [(ngModel)]="reservation.clubId" placeholder="Sélectionner des clubs"></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="evenements">Événements</label>
+                    <p-dropdown appendTo="body" id="evenements" [options]="evenements" optionLabel="nom" [(ngModel)]="reservation.evenementId"  placeholder="Sélectionner des événements"></p-dropdown>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text"
+                    (click)="saveReservation()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteReservationDialog" header="Confirmer" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="reservation">Êtes-vous sûr de vouloir supprimer <b>{{reservation.lieu}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non"
+                    (click)="deleteReservationDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui"
+                    (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteReservationsDialog" header="Confirmer" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Êtes-vous sûr de vouloir supprimer les réservations sélectionnées?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non"
+                    (click)="deleteReservationsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui"
+                    (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="calendrierReservationDialog" [style]="{width: '450px'}" header="Calendrier de les réservations"
+        [modal]="true"  [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true" class="p-fluid">
+        <ng-template pTemplate="content">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+        </ng-template>
+<!--
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"
+                (click)="hideDialog()"></button>
+            <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text"
+                (click)="saveReservation()"></button>
+        </ng-template> -->
+    </p-dialog>
+    </div>
+</div>

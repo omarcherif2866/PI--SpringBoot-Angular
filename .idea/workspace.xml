@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="edccbdb1-3e74-46b1-a7f9-fabb73738b7a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/pi/Controlleurs/AuthenticationRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/pi/Controlleurs/AuthenticationRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/pi/Services/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/pi/Services/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/auth-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/auth-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/login/login.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/login/login.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/signup/signup.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/signup/signup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/signup/signup.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/signup/signup.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/auth/signup/signup.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/documentation/documentation.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/documentation/documentation.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/uikit/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/uikit/profile/profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/uikit/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/uikit/profile/profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/components/utilities/utilities-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/components/utilities/utilities-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/service/storage.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/service/storage.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/service/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/service/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/esprit/service/web-socket.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/esprit/service/web-socket.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/layout/app.menu.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/layout/app.menu.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/layout/app.topbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/layout/app.topbar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/main.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2j0LsPaxm94WicSUAAVXDxphJI7" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "User",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="edccbdb1-3e74-46b1-a7f9-fabb73738b7a" name="Changes" comment="" />
+      <created>1720519258691</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1720519258691</updated>
+      <workItem from="1720519261935" duration="17000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

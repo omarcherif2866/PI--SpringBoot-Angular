@@ -1,0 +1,49 @@
+<div class="w-full surface-card py-8 px-5 sm:px-8 large-card" style="border-radius:53px">
+    <form class="form-body" name="form" (ngSubmit)="onSubmit()" #f="ngForm">
+      <div>
+        <label for="inputImage" class="block text-900 text-xl font-medium mb-3">Image URL</label>
+        <div class="ms-auto position-relative image-upload-container">
+          <div class="position-absolute top-50 translate-middle-y search-icon px-3">
+            <i class="bi bi-image-fill"></i>
+          </div>
+          <img *ngIf="imageSrc" [src]="imageSrc" alt="Profile Image" class="circular-image"/>
+         <br>
+          <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000"  label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+         </div>
+        
+        <br><br>
+  
+        <label for="inputPrenom" class="block text-900 text-xl font-medium mb-2">FirstName</label>
+        <input type="text" id="inputPrenom" placeholder="Enter your FirstName" [(ngModel)]="form.prenom" name="prenom" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem" required>
+        
+  
+        <label for="inputNom" class="block text-900 text-xl font-medium mb-2">LastName</label>
+        <input type="text" id="inputNom" placeholder="Enter your LastName" [(ngModel)]="form.nom" name="nom" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem" required>
+    
+  
+        <label for="inputUsername" class="block text-900 text-xl font-medium mb-2">Username</label>
+        <input type="text" id="inputUsername" placeholder="Enter Username" [(ngModel)]="form.username" name="username" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem" required>
+        
+  
+        <label for="inputEmail" class="block text-900 text-xl font-medium mb-2">Email</label>
+        <input type="email" id="inputEmail" placeholder="Enter Email Address" [(ngModel)]="form.email" name="email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem" required>
+      
+  
+        <label for="inputTel" class="block text-900 text-xl font-medium mb-2">Phone Number</label>
+        <input type="tel" id="inputTel" placeholder="Enter Telephone Number" [(ngModel)]="form.tel" name="tel" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem" required>
+      
+  
+        <label for="inputPassword" class="block text-900 font-medium text-xl mb-2">Password</label>
+        <p-password id="inputPassword" placeholder="Enter Password" [(ngModel)]="form.password" name="password" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem" required></p-password>
+       
+  
+        <br>
+        <div class="d-grid">
+          <button pButton pRipple label="Update Profile" class="w-full p-3 text-xl"></button>
+        </div>
+      </div>
+      
+    </form>
+  </div>
+  
+        

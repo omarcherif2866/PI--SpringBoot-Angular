@@ -1,0 +1,74 @@
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <div class="flex flex-column align-items-center justify-content-center">
+    <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+      <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+        <div class="text-center mb-5">
+          <span class="text-600 font-medium">Sign in to continue</span>
+        </div>
+        <form class="form-body" *ngIf="!isLoggedIn" name="signUpForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+          <div>
+            <label for="inputUsername" class="block text-900 text-xl font-medium mb-2">Username</label>
+            <input type="text" id="inputUsername" placeholder="Enter your Username" name="username" [(ngModel)]="signUpForm.username" #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.errors }" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem" required>
+            <div *ngIf="f.submitted && username.errors" class="text-red-500">
+              <div *ngIf="username.errors.required">Username is required</div>
+            </div>
+
+            <label for="inputpassword" class="block text-900 font-medium text-xl mb-2">Password</label>
+            <p-password id="inputpassword" placeholder="Enter Password" name="password" [(ngModel)]="signUpForm.password" minlength="4" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem" required></p-password>
+            <div *ngIf="f.submitted && password.errors" class="text-red-500">
+              <div *ngIf="password.errors.required">Password is required</div>
+              <div *ngIf="password.errors.minlength">Password must be at least 4 characters long</div>
+            </div>
+
+            <label for="input2FA" class="block text-900 font-medium text-xl mb-2">Double Factor Code</label>
+            <p-password id="input2FA" placeholder="Enter 2FA Code" name="twoFactorCode" [(ngModel)]="signUpForm.twoFactorCode" #twoFactorCode="ngModel" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem" required></p-password>
+            <div *ngIf="f.submitted && twoFactorCode.errors" class="text-red-500">
+              <div *ngIf="twoFactorCode.errors.required">2FA Code is required</div>
+            </div>
+
+            <div class="flex align-items-center justify-content-between mb-5 gap-5">
+              <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)" [routerLink]="['/auth/forgetpassword']">Forgot password?</a>
+            </div>
+            <button pButton pRipple label="Sign In" class="w-full p-3 text-xl"></button>
+            <div class="flex align-items-center justify-content-between mb-5 gap-5">
+              <br> <br>
+              <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)" [routerLink]="['/auth/signup']">Would you join us?</a>
+            </div>
+          </div>
+          <div class="login-or">
+            <span class="or-line"></span>
+            <span class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Se connecter avec les Réseaux Sociaux</span>
+            <br><br>
+            <div class="social-login">
+              <div id="g_id_onload"
+                  data-client_id="453891221202-gg8co001vis4l6tva7nb2610alchkq95.apps.googleusercontent.com"
+                  data-context="signin"
+                  data-ux_mode="popup"
+                  data-login_uri="http://localhost:4200/auth/login"
+                  data-auto_select="true"
+                  data-itp_support="true">
+              </div>
+              <div class="g_id_signin"
+                  data-type="standard"
+                  data-shape="rectangular"
+                  data-theme="filled_black"
+                  data-text="signin_with"
+                  data-size="large"
+                  data-logo_alignment="left"
+                  data-width="350">
+              </div>
+            </div>
+            <!-- <button pButton pRipple label="Login with LinkedIn" (click)="loginWithLinkedIn()"></button> -->
+             <br>
+             
+            <!-- Exemple d'utilisation d'une image comme bouton -->
+            <button (click)="onButtonClick()">
+              <img src="../../../../../assets/Sign-In-Large---Active.png" alt="Button Image" width="350" height="40">
+            </button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

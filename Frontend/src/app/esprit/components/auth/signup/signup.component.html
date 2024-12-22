@@ -1,0 +1,80 @@
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <div class="flex flex-column align-items-center justify-content-center">
+    <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+      <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+        <div class="text-center mb-5">
+          <span class="text-600 font-medium">Signup</span>
+        </div>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <div>
+            <label for="inputName" class="block text-900 text-xl font-medium mb-2">Username</label>
+            <input type="text" id="inputName" placeholder="Enter Username" formControlName="username" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+            <div *ngIf="signupForm.get('username').invalid && signupForm.get('username').touched" class="text-red-500">
+              Username is required and should be at least 3 characters long.
+            </div>
+
+            <label for="inputEmail" class="block text-900 text-xl font-medium mb-2">Email</label>
+            <input type="email" id="inputEmail" placeholder="Enter Email Address" formControlName="email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+            <div *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched" class="text-red-500">
+              Enter a valid email address.
+            </div>
+
+            <label for="inputTel" class="block text-900 text-xl font-medium mb-2">Phone Number</label>
+            <input id="inputTel" placeholder="Enter Telephone Number" formControlName="tel" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+            <div *ngIf="signupForm.get('tel').invalid && signupForm.get('tel').touched" class="text-red-500">
+              Enter a valid phone number.
+            </div>
+
+            <label for="inputPassword" class="block text-900 font-medium text-xl mb-2">Password</label>
+            <p-password id="inputPassword" placeholder="Enter Password" formControlName="password" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+            <div *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched" class="text-red-500">
+              Password is required and should be at least 6 characters long.
+            </div>
+
+            <label for="inputImage" class="block text-900 text-xl font-medium mb-2">Image URL</label>
+            <input type="file" id="inputImage" name="image" formControlName="image" pButton pRipple class="w-full p-2 text-m" required>
+            <div *ngIf="signupForm.get('image').invalid && signupForm.get('image').touched" class="text-red-500">
+              Image is required.
+            </div>
+
+            <div class="flex align-items-center justify-content-between mb-5 gap-5">
+              <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)" [routerLink]="['/auth/login']">Already have an account?</a>
+            </div>
+            <div class="d-grid">
+              <button type="submit" pButton pRipple label="Sign Up" class="w-full p-3 text-xl"></button>
+            </div>
+          </div>
+        </form>
+        <div class="login-or">
+          <span class="or-line"></span>
+          <span class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Se connecter avec les Réseaux Sociaux</span>
+          <br> <br><div class="social-login">
+            <div id="g_id_onload"
+                 data-client_id="453891221202-gg8co001vis4l6tva7nb2610alchkq95.apps.googleusercontent.com"
+                 data-context="signin"
+                 data-ux_mode="popup"
+                 data-login_uri="http://localhost:4200/auth/login"
+                 data-auto_select="true"
+                 data-itp_support="true">
+            </div>
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="rectangular"
+                 data-theme="filled_black"
+                 data-text="signin_with"
+                 data-size="large"
+                 data-logo_alignment="left"
+                 data-width="350">
+            </div>
+          </div>
+          <br>
+           
+          <!-- Exemple d'utilisation d'une image comme bouton -->
+          <button (click)="onButtonClick()">
+            <img src="../../../../../assets/Sign-In-Large---Active.png" alt="Button Image" width="350" height="40">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

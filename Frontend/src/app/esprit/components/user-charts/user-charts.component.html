@@ -1,0 +1,19 @@
+<div class="dashboard">
+    <div class="chart">
+      <h3>Members Activated vs Blocked</h3>
+      <p-chart type="pie" [data]="activatedBlockedChartData" [options]="pieChartOptions"></p-chart>
+    </div>
+    
+    <div class="chart">
+      <h3>Total Users</h3>
+      <div class="card">
+        <h1>{{ totalUsers }}</h1>
+      </div>
+    </div>
+    
+    <div class="chart">
+      <h3>Role Distribution</h3>
+      <p-chart type="pie" [data]="roleDistributionChartData" [options]="pieChartOptions"></p-chart>
+    </div>
+  </div>
+  

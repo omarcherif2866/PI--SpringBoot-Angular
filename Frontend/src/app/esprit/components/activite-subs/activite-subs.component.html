@@ -1,0 +1,80 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card">
+			<h5>Participer à un Team-building</h5>
+			<p-dataView #dv [value]="activites" [paginator]="true" [rows]="9" filterBy="nom" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+				<ng-template pTemplate="header">
+					<div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+						<span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input type="search" pInputText placeholder="Rechercher par nom" (input)="onFilter(dv, $event)">
+                        </span>	
+						<p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+					</div>
+				</ng-template> 
+				
+
+				<ng-template let-activites pTemplate="listItem">
+					<div class="col-12" *ngFor="let act of activites">
+						<div class="flex flex-column md:flex-row align-items-center p-3 w-full">
+							<img [src]="getImageUrl(act.image)" [alt]="act.image" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"/>
+							<div class="flex-1 flex flex-column align-items-center text-center md:text-left">
+								<div class="font-bold text-2xl">Nom : {{act.nom}}</div>
+								<div class="font-semibold">Description : {{act.description}}</div>
+								<div class="font-semibold">Annmateur : {{ formatAnnimateur(act.annimateur) }}</div>
+								<div class="font-semibold">Session (s) : 
+									<ul>
+										<li *ngFor="let session of act.listSessions">{{ session.nom }}</li>
+									</ul>
+								</div>
+							</div>
+							<button pButton pRipple type="button" label="Primary" class="p-button-Raised"></button>
+
+						</div>
+
+					</div>
+					
+				</ng-template>
+
+				<ng-template let-activites pTemplate="gridItem">
+					<div class="grid grid-nogutter">
+					  <div class="col-12 md:col-4" *ngFor="let act of activites">
+						<div class="card m-3 border-1 surface-border">
+						  <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+							<div class="flex align-items-center">
+							  <i class="pi pi-tag mr-2"></i>
+							  <span class="font-semibold">{{ act.nom }}</span>
+							</div>
+						  </div>
+						  <!-- Message "Il n'y a pas de places disponibles" -->
+						  <div *ngIf="act.nbrParticipants === 0"
+							   class="mb-2" style="background-color: red; color: white; padding: 5px 10px; border-radius: 8px; text-align: center;">
+							Il n'y a pas de places disponibles
+						  </div>
+						  <div class="flex flex-column align-items-center text-center mb-3">
+							<img [src]="getImageUrl(act.image)" [alt]="act.image" class="w-9 shadow-2 my-3 mx-0"/>
+							<div class="text-2xl font-bold">Animateur : {{ act.annimateur }}</div>
+							<div class="mb-3">{{ act.description }}</div>
+						  </div>
+						  <div class="flex align-items-center justify-content-between">
+							<ul>
+							  <span class="mb-3">Sessions : </span>
+							  <li *ngFor="let session of act.listSessions">{{ session.nom }}</li>
+							</ul>
+						  </div>
+						  <div class="flex justify-content-center" *ngIf="act.nbrParticipants > 0">
+							<button pButton pRipple type="button" label="Participer" class="p-button-rounded" (click)="participateInActivity(act.id)"></button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </ng-template>
+				  
+			</p-dataView>
+		</div>
+	</div>
+
+
+
+
+</div>

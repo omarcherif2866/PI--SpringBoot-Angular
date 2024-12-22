@@ -1,0 +1,236 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter une activité" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Ajouter une session a une activité" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewSession()"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+
+            </p-toolbar> 
+
+
+            <p-table #dt [value]="activites" [columns]="cols" responsiveLayout="scroll" [rows]="5" [globalFilterFields]="['nom','annimateur','listSessions[1].nom']" [paginator]="true" [rowsPerPageOptions]="[5,10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedActivites" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Manage activites</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <!-- <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th> -->
+                        <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="name">Nom <p-sortIcon field="name"></p-sortIcon></th>
+                        <th>Image</th>
+                        <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="animateur">Annimateurs <p-sortIcon field="animateur"></p-sortIcon></th>
+                        <th pSortableColumn="sessions">Liste des Sessions <p-sortIcon field="sessions"></p-sortIcon></th>
+                        <th pSortableColumn="reservations">Liste des Reservations <p-sortIcon field="reservations"></p-sortIcon></th>
+                        <th pSortableColumn="reservations">Nombre de Places disponible <p-sortIcon field="reservations"></p-sortIcon></th>
+                        <!-- <th pSortableColumn="reservations">Liste des Participants <p-sortIcon field="users"></p-sortIcon></th> -->
+
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-activite>
+                    <tr>
+                        <!-- <td>
+                            <p-tableCheckbox [value]="activite"></p-tableCheckbox>
+                        </td> -->
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{activite.id}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Nom</span>
+                            {{activite.nom}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Image</span>
+                            <img [src]="getImageUrl(activite.image)" [alt]="activite.image" width="100" class="shadow-4" />
+                          </td>                          
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Description</span>
+                            {{activite.description}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Annimateurs</span>
+                            {{activite.annimateur}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Liste des Sessions</span>
+                            <ul>
+                              <li *ngFor="let session of activite.listSessions">{{ session.nom }}</li>
+                            </ul>
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Liste des Reservations</span>
+                            <ul>
+                              <li *ngFor="let reservation of activite.listReservations">Budget :{{ reservation.budget }} Dt <br> Date : {{ reservation.date }} <br> Lieu : {{ reservation.lieu }} <br> </li>
+                            </ul>
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">nbrParticipants</span>
+                            {{activite.nbrParticipants}}
+                        </td>
+                        <!-- <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Liste des Participants</span>
+                            <ul>
+                              <li *ngFor="let user of activite.users">{{user.username}}<br>{{user.email}}</li>
+                            </ul>
+                        </td> -->
+                          
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(activite)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(activite)"></button>
+                                <button pButton pRipple icon="pi pi-fw pi-users" class="p-button-rounded p-button-primary" (click)="showParticipants(activite)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+
+
+
+
+<p-dialog [(visible)]="activiteDialog" [style]="{width: '450px'}" header="Activité Détails" [modal]="true" class="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="nom">Nom</label>
+            <input type="text" pInputText id="nom" [(ngModel)]="activite.nom" required autofocus 
+                   [ngClass]="{'ng-invalid ng-dirty': submitted && !activite.nom}" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !activite.nom">Nom est requis.</small>
+        </div>
+        <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" pInputTextarea [(ngModel)]="activite.description" required rows="3" cols="20" 
+                      [ngClass]="{'ng-invalid ng-dirty': submitted && !activite.description}"></textarea>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !activite.description">Description est requise.</small>
+        </div>
+        <div class="field">
+            <label for="nbrParticipants">Nombre de Participants</label>
+            <input type="number" pInputText id="nbrParticipants" [(ngModel)]="activite.nbrParticipants" required autofocus 
+                   [ngClass]="{'ng-invalid ng-dirty': submitted && !activite.nbrParticipants}" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !activite.nbrParticipants">Nombre de Participants est requis.</small>
+        </div>
+        <div class="field">
+            <label for="image">Image</label>
+            <p-fileUpload mode="basic" name="image" accept="image/*" maxFileSize="1000000" 
+                          (onSelect)="onFileSelected($event)" label="Choisir une image" 
+                          chooseLabel="Choisir une image" [ngClass]="{'ng-invalid ng-dirty': submitted && uploadedFiles.length === 0}"></p-fileUpload>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && uploadedFiles.length === 0">Image est requise.</small>
+        </div>
+        <div class="field">
+            <label for="annimateur">Annimateur</label>
+            <p-dropdown [options]="annimateurOptions" [(ngModel)]="activite.annimateur" placeholder="Sélectionner un annimateur" 
+                        [showClear]="true" [ngClass]="{'ng-invalid ng-dirty': submitted && !activite.annimateur}"></p-dropdown>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !activite.annimateur">Annimateur est requis.</small>
+        </div>
+        <div class="field">
+            <h5>Sessions</h5>
+            <div class="grid formgrid">
+                <div class="col-12 md:col-4" *ngFor="let ses of sessions">
+                    <div class="field-checkbox">
+                        <p-checkbox name="sessions" [value]="ses" [(ngModel)]="selectedSessions" inputId="{{ses.id}}"></p-checkbox>
+                        <label for="{{ses.id}}">{{ses.nom}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <h5>Reservations</h5>
+            <div class="grid formgrid">
+                <div class="col-12 md:col-4" *ngFor="let reserv of reservations">
+                    <div class="field-checkbox">
+                        <p-checkbox name="reservations" [value]="reserv" [(ngModel)]="selectedReservations" inputId="{{reserv.id}}"></p-checkbox>
+                        <label for="{{reserv.id}}" class="reservation-label">
+                            Lieu : {{ reserv.lieu }}
+                            <div class="reservation-details">
+                                <strong>Budget:</strong> {{ reserv.budget }} Dt <br>
+                                <strong>Date Debut:</strong> {{ reserv.dateDeb | date:'short' }} <br>
+                                <strong>Date Fin:</strong> {{ reserv.dateFin | date:'short' }} <br>
+                                <strong>Lieu:</strong> {{ reserv.lieu }}
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple [label]="actionLabel" icon="pi pi-check" class="p-button-text" (click)="saveActivite()"></button>
+    </ng-template>
+</p-dialog>
+
+       
+
+<p-dialog [(visible)]="participantsDialog" [style]="{width: '450px'}" header="Liste des Participants pour {{ activite.nom }}" [modal]="true" class="p-fluid">
+    <ng-template pTemplate="content">
+      <div *ngIf="participants && participants.length > 0">
+        <ul>
+          <li *ngFor="let participant of activite.users">
+           Nom : {{ participant.username }} <br> Email : {{ participant.email }}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="activite.users && activite.users.length === 0">
+        <p>Aucun participant inscrit pour cette activité.</p>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+        
+
+        <p-dialog [(visible)]="SessionDialog" [style]="{width: '450px'}" header="Ajouter une Session" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="p-field">
+                    <label for="nom">Nom de la session :</label>
+                    <input id="nom" type="text" pInputText [(ngModel)]="newSession.nom" required>
+                </div>
+                <div class="p-field">
+                    <label for="activite">Sélectionner une activité :</label>
+                    <p-dropdown id="activite" [options]="activites" [(ngModel)]="newSession.activite" optionLabel="nom" placeholder="Sélectionner une activité" appendTo="body"></p-dropdown>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="closeDialog()"></button>
+                <button pButton pRipple label="Ajouter" icon="pi pi-check" class="p-button-text" (click)="saveSession()"></button>
+            </ng-template>
+        </p-dialog>
+        
+        
+        
+        
+
+        <p-dialog [(visible)]="deleteActiviteDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span *ngIf="activite">Vous voulez supprimer cette activité ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteActiviteDialog = false"></button>
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+
+    </div>
+</div>

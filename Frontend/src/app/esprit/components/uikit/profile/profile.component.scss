@@ -1,0 +1,35 @@
+.large-card {
+    width: 90%; /* Adjust the width as needed */
+    max-width: 1200px; /* Set a maximum width if needed */
+    margin: 0 auto; /* Center the card */
+  }
+
+  .image-upload-container {
+    width: 150px;
+    height: 150px;
+    position: relative;
+  }
+  
+  .circular-button {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  
+  .circular-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .search-icon {
+    pointer-events: none;
+    color: white;
+  }
+  

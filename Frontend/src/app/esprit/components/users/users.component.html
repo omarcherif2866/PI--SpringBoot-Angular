@@ -1,0 +1,63 @@
+<div class="grid">
+  <div class="col-12">
+      <div class="card px-6 py-6">
+    <p-toolbar styleClass="mb-4">
+        <div class="p-toolbar-group-left">
+          <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button></div>
+      </p-toolbar>
+       <p-table #dt [value]="Users" responsiveLayout="scroll" [columns]="cols" [rows]="5"  pTooltip="CSV" tooltipPosition="bottom" [globalFilterFields]="['id','username','email','tel','role']" selectionMode="multiple" [(selection)]="selectedUsers" [paginator]="true" [rowsPerPageOptions]="[5,10,15]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+              <h5 class="m-0">Manage People</h5>
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+            </span>
+          </div>
+      </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSelectableRow></th>
+            <th pSortableColumn="username">ID <p-sortIcon field="username"></p-sortIcon></th>
+            <th pSortableColumn="username">Username <p-sortIcon field="username"></p-sortIcon></th>
+            <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+            <th pSortableColumn="tel">Phone <p-sortIcon field="tel"></p-sortIcon></th>
+            <th>Role</th>
+            <th>Role_Change</th>
+            <th>Status</th>
+            <!-- <th>Actions</th> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <td pSelectableRow></td>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.tel }}</td>
+            <td>{{ user.role }}</td>
+            
+            <td>
+              <p-dropdown 
+              [options]="availableRoles" 
+              [(ngModel)]="newRole" 
+              optionLabel="label" 
+              optionValue="value" 
+              appendTo="body" 
+              (onChange)="updateUserRole(user, newRole)">
+            </p-dropdown> 
+          </td>
+          <td>{{ user.activated }}</td>
+            <td>
+              <!-- <button pButton icon="pi pi-pencil" (click)="editUser(user)"></button> -->
+              <button pButton icon="pi pi-power-off" (click)="unBanUser(user)" style="margin-right: 10px;"></button>
+              <button pButton icon="pi pi-ban" (click)="BanUser(user)" style="margin-right: 10px;"></button>
+              <button pButton icon="pi pi-trash" (click)="deleteUser(user)"></button>
+              
+            </td> 
+          </tr>
+        </ng-template>
+      </p-table>
+      </div>
+      </div>
+      </div>
